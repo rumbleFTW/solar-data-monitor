@@ -1,0 +1,75 @@
+@media (max-width: 800px) {
+    .flex-item-right, .flex-item-left {
+      flex: 100%;
+    }
+  }
+
+
+
+
+body{ 
+    /* background: url('./bg.jpg');
+    backdrop-filter: blur(3px);
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;  */
+    background: linear-gradient(to bottom right, #56d0f5, #ad7b1d);
+}
+
+header
+{
+    background-color: rgba(255, 255, 255, 0.4);
+    -webkit-backdrop-filter: blur(50px);
+    backdrop-filter: blur(50px);
+    
+}
+
+
+/* .chart--container
+{
+    display: grid;
+    grid-column-gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr) 150px);
+	/* width: 100vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+} */
+
+
+.rounded-lg
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-center
+{
+    width: auto;
+    display: flex;
+    /* flex-wrap: wrap; */
+    width: 100px;
+    margin: 0 -5px; 
+}
+
+
+.mb-10
+{
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(50px);
+    border-radius: 20px;
+    box-shadow: 0 25px 45px rgb(0 0 0 / 20%);
+}
+
+.chart
+{
+    background-color: white;
+    position: relative;
+    height: 100%;
+    width: auto;
+    /* background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(50px); */
+	border-radius: 10px;
+    /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); */
+}
