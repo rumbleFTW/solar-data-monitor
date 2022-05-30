@@ -1,0 +1,1 @@
+[Link](https://solar-data-monitor.netlify.app/)
