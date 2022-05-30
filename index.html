@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./style.css"></link>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js"></script>
     <script src="./script.js"></script>
     <title>Solar Data Monitoring</title>
 </head>
 <body>
+  <div id="chart-view">
     <!-- navbar -->
     <header class="text-gray-600 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -17,7 +19,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>
-            <span class="ml-3 text-xl">Tailblocks</span>
+            <span class="ml-3 text-xl">Solar Data Monitoring</span>
           </a>
           <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <a class="mr-5 hover:text-gray-900">First Link</a>
@@ -32,45 +34,62 @@
           </button>
         </div>
       </header>
+
+      <!-- Charts -->
       <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-wrap -mx-4 -mb-10 text-center" id="flex-container">
             <div class="sm:w-1/2 mb-10 px-4">
               <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--1">
               </canvas>
-              <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Temperature</h2>
-              <p>Most Recent Value:</p>
+              <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Temperature</h2>
+              <div class="current" id="current--1">0.0</div>
             </div>
             <div class="sm:w-1/2 mb-10 px-4">
-              <div class="rounded-lg h-64 overflow-hidden">
-              </div>
-              <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Humidity</h2>
-              <p>Most Recent Value:</p>
+              <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--2">
+              </canvas>
+              <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Humidity</h2>
+              <div class="current" id="current--2">0.0</div>
             </div>
             <div class="sm:w-1/2 mb-10 px-4">
-                <div class="rounded-lg h-64 overflow-hidden">
-                  <canvas class="chart" id="field--3"></canvas>
-                </div>
-                <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Voltage</h2>
-                <p>Most Recent Value:</p>
+              <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--3">
+              </canvas>
+                <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Voltage</h2>
+                <div class="current" id="current--3">0.0</div>
               </div>
               <div class="sm:w-1/2 mb-10 px-4">
-                <div class="rounded-lg h-64 overflow-hidden">
-                  <canvas class="chart" id="field--4"></canvas>
-                </div>
-                <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Current</h2>
-                <p>Most Recent Value:</p>
+                <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--4">
+                </canvas>
+                <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Current</h2>
+                <div class="current" id="current--4">0.0</div>
               </div>
               <div class="sm:w-1/2 mb-10 px-4">
-                <div class="rounded-lg h-64 overflow-hidden">
-                  <canvas class="chart" id="field--5"></canvas>
-                </div>
-                <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Power</h2>
-                <p>Most Recent Value:</p>
+                <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--5">
+                </canvas>
+                <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Power</h2>
+                <div class="current" id="current--5">0.0</div>
               </div>
           </div>
         </div>
       </section>
-   
+    </div>
+    <div id="about">
+      <section class="text-gray-600 body-font">
+        <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+          <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900" id="name">Abhijeet Basak
+              <br class="hidden lg:inline-block" id="roll">Class roll no-421
+            </h1>
+            <p class="mb-8 leading-relaxed" id="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi aperiam, vero quo iure vitae ipsa dicta in totam debitis, doloribus ipsum dolorum eligendi pariatur error facilis minima ex odit dolorem!</p>
+            <div class="flex justify-center">
+              <a class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded-full text-lg" href="https://www.instagram.com/abhijeetbasak9/">Instagram</a>
+            </div>
+          </div>
+          <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6" id = "img-container">
+            <img class="object-cover object-center rounded rounded-xl border-slate-800" alt="hero" src="./avatar.png">
+          </div>
+        </div>
+      </section>
+    </div>
 </body>
 </html>

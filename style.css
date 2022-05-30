@@ -5,15 +5,31 @@
     }
 }
 
-body
+#chart-view
 { 
     background: linear-gradient(to bottom right, #56d0f5, #ad7b1d);
     background-repeat: no-repeat;
-    /* background: url('./bg.jpg');
-    backdrop-filter: blur(3px);
-    background-attachment: fixed;
+}
+
+#about
+{
+    background: url('./bg.jpg');
     background-position: center center;
-    background-size: cover;  */
+    background-size: cover; 
+
+}
+
+#name, #id
+{
+    color: white;
+    font-family: monospace;
+    font-size:40px;
+    font-weight: bold;
+}
+
+#desc
+{
+    color:white;
 }
 
 header
@@ -33,15 +49,23 @@ header
     box-shadow: 0 25px 45px rgb(0 0 0 / 20%);
 }
 
-p
+.current
 {
     padding: 5px;
     background: #fff;
     color: #111;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.4);
     border-radius: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     letter-spacing: 1px;
     outline: none;
-    border: 0.3px solid rgba(255, 255, 255, 0.582);
+    border: 0.3px solid rgba(255, 255, 255, 0.45);
+}
+
+canvas
+{
+    margin-top: 15px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(1px);  
+    width: 100%;
 }

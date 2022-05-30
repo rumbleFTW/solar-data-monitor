@@ -30,6 +30,12 @@ fetch(link1, {
             entry.push(value.field1);
             createdAt.push(value.created_at);
         });
+		var last = entry.length;
+		while(entry[last] == null)
+		{
+			last --;
+		}
+		document.getElementById('current--1').textContent = entry[last];
     const field1 = new Chart(ctx1, {
 		type: 'line',
 		data: {
@@ -88,14 +94,20 @@ fetch(link2, {
             entry.push(value.field2);
             createdAt.push(value.created_at);
         });
+		var last = entry.length;
+		while(entry[last] == null)
+		{
+			last --;
+		}
+		document.getElementById('current--2').textContent = entry[last];
     const ctx2 = document.getElementById('field--2').getContext('2d');
     const field2 = new Chart(ctx2, {
 		type: 'line',
 		data: {
-			labels: createdAt,
+			labels: createdAt.slice(-1000),
 			datasets: [{
 				label: 'Humidity',
-				data: entry,
+				data: entry.slice(-1000),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',
@@ -150,16 +162,20 @@ fetch(link3, {
 		{
 			entry.pop()
 		}
-		console.log('Latest val');
-		console.log(entry)
+		var last = entry.length;
+		while(entry[last] == null)
+		{
+			last --;
+		}
+		document.getElementById('current--3').textContent = entry[last];
     const ctx3 = document.getElementById('field--3').getContext('2d');
     const field3 = new Chart(ctx3, {
 		type: 'line',
 		data: {
-			labels: createdAt,
+			labels: createdAt.slice(-1000),
 			datasets: [{
 				label: 'Voltage',
-				data: entry,
+				data: entry.slice(-1000),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',
@@ -210,14 +226,20 @@ fetch(link4, {
             entry.push(value.field4);
             createdAt.push(value.created_at);
         });
+		var last = entry.length;
+		while(entry[last] == null)
+		{
+			last --;
+		}
+		document.getElementById('current--4').textContent = entry[last];
     const ctx4 = document.getElementById('field--4').getContext('2d');
     const field4 = new Chart(ctx4, {
 		type: 'line',
 		data: {
-			labels: createdAt,
+			labels: createdAt.slice(-1000),
 			datasets: [{
 				label: 'Current',
-				data: entry,
+				data: entry.slice(-1000),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',
@@ -268,14 +290,20 @@ fetch(link5, {
             entry.push(value.field5);
             createdAt.push(value.created_at);
         });
+	var last = entry.length;
+	while(entry[last] == null)
+	{
+		last --;
+	}
+		document.getElementById('current--5').textContent = entry[last];
     const ctx5 = document.getElementById('field--5').getContext('2d');
     const field5 = new Chart(ctx5, {
 		type: 'line',
 		data: {
-			labels: createdAt,
+			labels: createdAt.slice(-1000),
 			datasets: [{
 				label: 'Active-Power',
-				data: entry,
+				data: entry.slice(-1000),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',
