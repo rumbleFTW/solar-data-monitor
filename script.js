@@ -167,6 +167,10 @@ fetch(link3, {
 		{
 			last --;
 		}
+		if(entry[last] <= 0.16348)
+		{
+			console.warn('Voltage low');
+		}
 		document.getElementById('current--3').textContent = entry[last] + ' mV';
     const ctx3 = document.getElementById('field--3').getContext('2d');
     const field3 = new Chart(ctx3, {

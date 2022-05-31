@@ -18,15 +18,15 @@ body{
     background-size: cover; 
 }
 
-#chart-view
+/* #chart-view
 { 
-    /* background: linear-gradient(to bottom right, #56d0f5, #ad7b1d); */
-    /* background: linear-gradient(to bottom right, rgb(244, 242, 242), rgb(119, 119, 233)); */
-    /* background: url('./bg.jpg');
+    background: linear-gradient(to bottom right, #56d0f5, #ad7b1d);
+    background: linear-gradient(to bottom right, rgb(244, 242, 242), rgb(119, 119, 233));
+    background: url('./bg.jpg');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;  */
-}
+    background-size: cover; 
+} */
 
 #about
 {
