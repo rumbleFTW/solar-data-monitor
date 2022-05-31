@@ -9,7 +9,7 @@ const link8 = "https://api.thingspeak.com/channels/1727245/fields/8.json?results
 const link9 = "https://api.thingspeak.com/channels/1727245/fields/9.json?results=8000"
 const link10 = "https://api.thingspeak.com/channels/1727245/fields/10.json?results=8000"
 
-
+const download = "https://api.thingspeak.com/channels/1727245/feeds.csv"
 
 
 function psh(arr, en, ca) {
