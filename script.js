@@ -35,7 +35,7 @@ fetch(link1, {
 		{
 			last --;
 		}
-		document.getElementById('current--1').textContent = entry[last];
+		document.getElementById('current--1').textContent = entry[last] + ' Degrees';
     const field1 = new Chart(ctx1, {
 		type: 'line',
 		data: {
@@ -99,7 +99,7 @@ fetch(link2, {
 		{
 			last --;
 		}
-		document.getElementById('current--2').textContent = entry[last];
+		document.getElementById('current--2').textContent = entry[last] + ' %';
     const ctx2 = document.getElementById('field--2').getContext('2d');
     const field2 = new Chart(ctx2, {
 		type: 'line',
@@ -167,7 +167,7 @@ fetch(link3, {
 		{
 			last --;
 		}
-		document.getElementById('current--3').textContent = entry[last];
+		document.getElementById('current--3').textContent = entry[last] + ' mV';
     const ctx3 = document.getElementById('field--3').getContext('2d');
     const field3 = new Chart(ctx3, {
 		type: 'line',
@@ -231,7 +231,7 @@ fetch(link4, {
 		{
 			last --;
 		}
-		document.getElementById('current--4').textContent = entry[last];
+		document.getElementById('current--4').textContent = entry[last] + ' mA';
     const ctx4 = document.getElementById('field--4').getContext('2d');
     const field4 = new Chart(ctx4, {
 		type: 'line',
@@ -295,7 +295,7 @@ fetch(link5, {
 	{
 		last --;
 	}
-		document.getElementById('current--5').textContent = entry[last];
+		document.getElementById('current--5').textContent = entry[last] + ' mW';
     const ctx5 = document.getElementById('field--5').getContext('2d');
     const field5 = new Chart(ctx5, {
 		type: 'line',
