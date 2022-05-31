@@ -11,19 +11,26 @@ html
 }
 
 
-#chart-view
-{ 
-    /* background: linear-gradient(to bottom right, #56d0f5, #ad7b1d); */
-    /* background: linear-gradient(to bottom right, rgb(244, 242, 242), rgb(119, 119, 233)); */
-    background: url('./bgmain.jpg');
+body{
+    background: url('./bg.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover; 
 }
 
+#chart-view
+{ 
+    /* background: linear-gradient(to bottom right, #56d0f5, #ad7b1d); */
+    /* background: linear-gradient(to bottom right, rgb(244, 242, 242), rgb(119, 119, 233)); */
+    /* background: url('./bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;  */
+}
+
 #about
 {
-    background: url('./bg.jpg');
+    /* background: url('./bg.jpg'); */
     background-position: center center;
     background-size: cover; 
 
