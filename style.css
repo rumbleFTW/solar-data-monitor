@@ -18,19 +18,8 @@ body{
     background-size: cover; 
 }
 
-/* #chart-view
-{ 
-    background: linear-gradient(to bottom right, #56d0f5, #ad7b1d);
-    background: linear-gradient(to bottom right, rgb(244, 242, 242), rgb(119, 119, 233));
-    background: url('./bg.jpg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover; 
-} */
-
 #about
 {
-    /* background: url('./bg.jpg'); */
     background-position: center center;
     background-size: cover; 
 
@@ -51,10 +40,13 @@ body{
 
 header
 {
+    width: 100%;
     background-color: rgba(255, 255, 255, 0.4);
     -webkit-backdrop-filter: blur(50px);
     backdrop-filter: blur(50px);
     box-shadow: 0 25px 45px rgb(0 0 0 / 20%);
+    position: fixed;
+    z-index: 99;
 }
 
 .mb-10
@@ -93,4 +85,9 @@ canvas
     border-radius: 50%;
     width: 50px;
     height: auto;
+}
+
+#info
+{
+    padding-top:25%;
 }
