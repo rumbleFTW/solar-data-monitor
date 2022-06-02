@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css"></link>
+    <link rel="icon" type="image/x-icon" href="./icon.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js"></script>
     <script src="./script.js"></script>
@@ -19,15 +20,13 @@
             <span class="ml-3 text-xl">Solar Data Monitoring</span>
           </a>
           <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <a class="mr-5 hover:text-gray-900">Project</a>
-            <a href="#data" class="mr-5 hover:text-gray-900">Data</a>
-            <a href="#about" class="mr-5 hover:text-gray-900">About</a>
+            <a class="mr-5 hover:text-blue-500">Project</a>
+            <a href="#data" class="mr-5 hover:text-blue-500">Data</a>
+            <a href="#about" class="mr-5 hover:text-blue-500">About</a>
           </nav>
-          <a href = "https://api.thingspeak.com/channels/1727245/feeds.csv?results=8000" class="inline-flex items-center bg-green-100 border-0 py-1 px-3 focus:outline-none hover:bg-blue-200 rounded text-base mt-4 md:mt-0">Download Data
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-          </a>
+          
+          <input id="dt" type="date" class="mr-5 bg-green-100 border-0 py-1 px-3 focus:outline-none hover:bg-blue-200 rounded text-base mt-4 md:mt-0"></input>
+          <a id="down" onclick="downl()" href = "https://api.thingspeak.com/channels/1727245/feeds.csv?results=8000" class="mr-5 bg-green-100 border-0 py-1 px-3 focus:outline-none hover:bg-blue-200 rounded text-base mt-4 md:mt-0">Download Data</a>
         </div>
       </header>
       <section id="info" class="text-gray-600 body-font">
@@ -39,44 +38,23 @@
           </div>
           <div class="flex flex-wrap">
             <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
-              <h2 class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2">ESP8266NodeMCU</h2>
-              <p class="leading-relaxed text-base mb-4">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-              <a class="text-indigo-500 inline-flex items-center">Learn More
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </a>
+              <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">ESP8266NodeMCU</h2>
+              <p class="leading-relaxed text-base mb-4 text-white">NodeMCU is an open-source Lua based firmware and development board specially targeted for IoT based Applications. It includes firmware that runs on the ESP8266 Wi-Fi SoC from Espressif Systems, and hardware which is based on the ESP-12 module.</p>
             </div>
             <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
-              <h2 class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2">Sensors</h2>
-              <p class="leading-relaxed text-base mb-4">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-              <a class="text-indigo-500 inline-flex items-center">Learn More
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </a>
+              <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">Sensors</h2>
+              <p class="leading-relaxed text-base mb-4 text-white">The sensors used are Voltage sensor and DHT11 Sensor, which is a Temperature and humidity sensor</p>
             </div>
             <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
-              <h2 class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2">Buzzer & LEDs</h2>
-              <p class="leading-relaxed text-base mb-4">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-              <a class="text-indigo-500 inline-flex items-center">Learn More
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </a>
+              <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">Buzzer & LEDs</h2>
+              <p class="leading-relaxed text-base text-white mb-4">A buzzer is a small yet efficient component to add sound features to our project/system. LED, in full light-emitting diode is a semiconductor device that emits infrared or visible light when charged with an electric current.</p>
             </div>
             <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
-              <h2 class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2">Solar Panel</h2>
-              <p class="leading-relaxed text-base mb-4">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-              <a class="text-indigo-500 inline-flex items-center">Learn More
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </a>
+              <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">Solar Panel</h2>
+              <p class="leading-relaxed text-base text-white mb-4">A solar panel is actually a collection of solar (or photovoltaic) cells, which can be used to generate electricity through photovoltaic effect.</p>
             </div>
             
           </div>
-          <button class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>
         </div>
       </section>
       <!-- Charts -->
@@ -131,6 +109,21 @@
           </div>
           <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6" id = "img-container">
             <img class="object-cover object-center rounded rounded-xl border-slate-800" alt="hero" src="./avatar.png">
+          </div>
+        </div>
+
+
+        <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+          <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900" id="name">Dr. Binoy Kumar Karmakar
+              <br class="hidden lg:inline-block" id="roll">PhD, M.Tech
+            </h1>
+            <p class="mb-8 leading-relaxed" id="desc">Dr. Binoy Kumar Karmakar is presently working as Assistant Professor in the Department of Applied Physics, University of Calcutta. He received his PhD and M. Tech. (power system) from Indian Institute of Technology Kharagpur, India. During a brief period following his M. Tech degree and coming back to academia, he worked in a startup, where he was involved in the development of power network simulator for studies on electrical power system.
+            Dr. Karmakar has published his work in various IEEE journals and conferences. He is also granted a patent on improving the efficiency of a PV system during partial shading. His current area of research is targeted at meeting the challenges in integration of solar energy with  Smart Power Grid.
+            </p>
+          </div>
+          <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6" id = "img-container">
+            <img class="object-cover object-center rounded rounded-xl border-slate-800" alt="hero" src="./avatar2.png">
           </div>
         </div>
       </section>

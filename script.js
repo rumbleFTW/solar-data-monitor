@@ -12,9 +12,9 @@ const link10 = "https://api.thingspeak.com/channels/1727245/fields/10.json?resul
 const download = "https://api.thingspeak.com/channels/1727245/feeds.csv"
 
 
-function psh(arr, en, ca) {
-    en.push(arr.field1);
-    ca.push(arr.created_at);
+function downl() {
+	var date = document.getElementById("dt").value
+    document.getElementById("down").href = `https://api.thingspeak.com/channels/1727245/feeds.csv?start=${date}%2000:00:00&end=${date}%2023:59:59`;
 }
 
 fetch(link1, {            
