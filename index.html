@@ -5,13 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css"></link>
-    <link rel="icon" type="image/x-icon" href="./icon.jpg">
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gauge.js/1.2.1/gauge.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="./script.js"></script>
     <title>Solar Data Monitoring</title>
 </head>
 <body>
+
+
     <!-- navbar -->
     <header class="text-gray-600 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -42,59 +44,88 @@
               <p class="leading-relaxed text-base mb-4 text-white">NodeMCU is an open-source Lua based firmware and development board specially targeted for IoT based Applications. It includes firmware that runs on the ESP8266 Wi-Fi SoC from Espressif Systems, and hardware which is based on the ESP-12 module.</p>
             </div>
             <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
-              <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">Sensors</h2>
-              <p class="leading-relaxed text-base mb-4 text-white">The sensors used are Voltage sensor and DHT11 Sensor, which is a Temperature and humidity sensor</p>
+                <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">Sensors</h2>
+                <p class="leading-relaxed text-base mb-4 text-white">The sensors used are Voltage sensor and DHT11 Sensor, which is a Temperature and humidity sensor</p>
             </div>
             <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
-              <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">Buzzer & LEDs</h2>
-              <p class="leading-relaxed text-base text-white mb-4">A buzzer is a small yet efficient component to add sound features to our project/system. LED, in full light-emitting diode is a semiconductor device that emits infrared or visible light when charged with an electric current.</p>
+                <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">Buzzer & LEDs</h2>
+                <p class="leading-relaxed text-base text-white mb-4">A buzzer is a small yet efficient component to add sound features to our project/system. LED, in full light-emitting diode is a semiconductor device that emits infrared or visible light when charged with an electric current.</p>
             </div>
             <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
-              <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">Solar Panel</h2>
-              <p class="leading-relaxed text-base text-white mb-4">A solar panel is actually a collection of solar (or photovoltaic) cells, which can be used to generate electricity through photovoltaic effect.</p>
+                <h2 class="text-lg sm:text-xl text-indigo-500 font-medium title-font mb-2">Solar Panel</h2>
+                <p class="leading-relaxed text-base text-white mb-4">A solar panel is actually a collection of solar (or photovoltaic) cells, which can be used to generate electricity through photovoltaic effect.</p>
             </div>
-            
           </div>
         </div>
       </section>
-      <!-- Charts -->
-      <section id="data" class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-wrap -mx-4 -mb-10 text-center" id="flex-container">
-            <div class="sm:w-1/2 mb-10 px-4">
-              <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--1">
-              </canvas>
-              <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Temperature</h2>
-              <div class="current" id="current--1">0.0</div>
+
+
+    <!-- Charts -->
+
+    <section id="data">
+        <div class="chart-container">
+            <div class="column">
+
+                <div class="tv">
+                    <canvas class="line" id="field--1"></canvas>
+                    <div class="current"><p>Temperature:</p><p class="val current--1">0.0</p></div>
+                </div>
+                
+                <div class="tv">
+                    <canvas class="line" id="field--2"></canvas>
+                    <div class="current"><p>Humidity:</p><p class="val current--2">0.0</p></div>
+                </div>
+
+                <div class="tv">
+                    <canvas class="line" id="field--3"></canvas>
+                    <div class="current"><p>Voltage:</p><p class="val current--3">0.0</p></div>
+                </div>
+                
+                <div class="tv">
+                    <canvas class="line" id="field--4"></canvas>
+                    <div class="current"><p>Current:</p><p class="val current--4">0.0</p></div>
+                </div>
+
+                <div class="tv">
+                    <canvas class="line" id="field--5"></canvas>
+                    <div class="current"><p>Power:</p><p class="val current--5">0.0</p></div>
+                </div>
+
             </div>
-            <div class="sm:w-1/2 mb-10 px-4">
-              <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--2">
-              </canvas>
-              <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Humidity</h2>
-              <div class="current" id="current--2">0.0</div>
+
+            <div class="column">
+
+                <div class="tv">
+                    <canvas class="gauge" id="field--6"></canvas>
+                    <div class="current"><p>Temperature:</p><p class="val current--1">0.0</p></div>
+                </div>
+                
+                <div class="tv">
+                    <canvas class="gauge" id="field--7"></canvas>
+                    <div class="current"><p>Humidity:</p><p class="val current--2">0.0</p></div>
+                </div>
+
+                <div class="tv">
+                    <canvas class="gauge" id="field--8"></canvas>
+                    <div class="current"><p>Voltage:</p><p class="val current--3">0.0</p></div>
+                </div>
+                
+                <div class="tv">
+                    <canvas class="gauge" id="field--9"></canvas>
+                    <div class="current"><p>Current:</p><p class="val current--4">0.0</p></div>
+                </div>
+
+                <div class="tv">
+                    <canvas class="gauge"  id="field--0"></canvas>
+                    <div class="current"><p>Power:</p><p class="val current--5">0.0</p></div>
+                </div>
+
             </div>
-            <div class="sm:w-1/2 mb-10 px-4">
-              <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--3">
-              </canvas>
-                <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Voltage</h2>
-                <div class="current" id="current--3">0.0</div>
-              </div>
-              <div class="sm:w-1/2 mb-10 px-4">
-                <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--4">
-                </canvas>
-                <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Current</h2>
-                <div class="current" id="current--4">0.0</div>
-              </div>
-              <div class="sm:w-1/2 mb-10 px-4">
-                <canvas class="rounded-lg h-64 overflow-hidden chart" id="field--5">
-                </canvas>
-                <h2 class="title-font text-2xl font-medium text-white-900 mt-6 mb-3">Power</h2>
-                <div class="current" id="current--5">0.0</div>
-              </div>
-          </div>
         </div>
-      </section>
-      <section id="about" class="text-gray-600 body-font">
+    </section>
+
+    <!-- About -->
+    <section id="about" class="text-gray-600 body-font">
         <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
           <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
             <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900" id="name">Abhijeet Basak
@@ -127,5 +158,7 @@
           </div>
         </div>
       </section>
+
+
 </body>
 </html>

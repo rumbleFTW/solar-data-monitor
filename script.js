@@ -1,347 +1,170 @@
-const link1 = "https://api.thingspeak.com/channels/1727245/fields/1.json?results=8000"
-const link2 = "https://api.thingspeak.com/channels/1727245/fields/2.json?results=8000"
-const link3 = "https://api.thingspeak.com/channels/1727245/fields/3.json?results=8000"
-const link4 = "https://api.thingspeak.com/channels/1727245/fields/4.json?results=8000"
-const link5 = "https://api.thingspeak.com/channels/1727245/fields/5.json?results=8000"
-const link6 = "https://api.thingspeak.com/channels/1727245/fields/6.json?results=8000"
-const link7 = "https://api.thingspeak.com/channels/1727245/fields/7.json?results=8000"
-const link8 = "https://api.thingspeak.com/channels/1727245/fields/8.json?results=8000"
-const link9 = "https://api.thingspeak.com/channels/1727245/fields/9.json?results=8000"
-const link10 = "https://api.thingspeak.com/channels/1727245/fields/10.json?results=8000"
+PREV = 300
+CRITICAL = 0.1636
+INTERVAL = 5000
 
-const download = "https://api.thingspeak.com/channels/1727245/feeds.csv"
+const API = `https://api.thingspeak.com/channels/1727245/feeds.json?results=${PREV}`
+const UPD = `https://api.thingspeak.com/channels/1727245/feeds.json?results=1`
 
+vals = {
+    labels: [],
+    readings:[
+        field1 = [],
+        field2 = [],
+        field3 = [],
+        field4 = [],
+        field5 = []
+    ]
+    };
 
-function downl() {
-	var date = document.getElementById("dt").value
+chartList = []
+
+function downl(){
+    var date = document.getElementById("dt").value
     document.getElementById("down").href = `https://api.thingspeak.com/channels/1727245/feeds.csv?start=${date}%2000:00:00&end=${date}%2023:59:59`;
 }
 
-fetch(link1, {            
-	method: 'GET',
-}).then((response)=>{
-	return response.json();
-}).then((data)=>{
-    const ctx1 = document.getElementById('field--1').getContext('2d');
-    entry = []
-    createdAt = []
-    data.feeds.forEach(value=>
+
+window.onload = function()
+{
+    fetch(API, {            
+	    method: 'GET',
+    }).then((response)=>{
+            return response.json();
+        }).then((data)=>
         {
-            entry.push(value.field1);
-            createdAt.push(value.created_at);
-        });
-		var last = entry.length;
-		while(entry[last] == null)
-		{
-			last --;
-		}
-		document.getElementById('current--1').textContent = entry[last] + ' Degrees';
-    const field1 = new Chart(ctx1, {
-		type: 'line',
-		data: {
-			labels: createdAt.slice(-1000),
-			datasets: [{
-				label: 'Temperature',
-				data: entry.slice(-1000),
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
-				borderWidth: 1
-			}]
-		},
-		options: {
-            showTooltips: true,
-            spanGaps: true,
-            maintainAspectRatio: false,
-			responsive: false,
-			scales: {
-				x: {
-					ticks: {
-						display: false
-					},
-					grid: {
-					  display: false
-					}
-				  }
-			}
-		}
-	});
-})
+            
+            for(let i = 0; i<PREV; i++)
+            {
+                vals.labels.push(data.feeds[i].created_at);
+                vals.readings[0].push(data.feeds[i].field1);
+                vals.readings[1].push(data.feeds[i].field2);
+                vals.readings[2].push(data.feeds[i].field3);
+                vals.readings[3].push(data.feeds[i].field4);
+                vals.readings[4].push(data.feeds[i].field5);
+            }
+            console.log(vals);
+            var objList = [
+                        {chartTag: 'field--1', gaugeTag: 'field--6',currTag: 'current--1', color: 'rgb(255, 165, 0)', index: 0, unit: '°C'},
+                        {chartTag: 'field--2', gaugeTag: 'field--7',currTag: 'current--2', color: 'rgb(128,128,128)', index: 1, unit: '%'},
+                        {chartTag: 'field--3', gaugeTag: 'field--8',currTag: 'current--3', color: 'rgb(38, 160, 252)', index: 2, unit: 'V'},
+                        {chartTag: 'field--4', gaugeTag: 'field--9',currTag: 'current--4', color: 'rgb(0,255,0)', index: 3, unit: 'mA'},
+                        {chartTag: 'field--5', gaugeTag: 'field--0',currTag: 'current--5', color: 'rgb(255, 0, 0)', index: 4, unit: 'mW'},
+                    ]
+            
+            function chartRender(obj)
+            {
+                var last = PREV;
+                while(vals.readings[obj.index][last] == null)
+                {
+                    last --;
+                }
+
+                elems = document.getElementsByClassName(obj.currTag);
+                [...elems].forEach(function(elem){elem.textContent = parseFloat(vals.readings[obj.index][last]) + ` ${obj.unit}`;
+                elem.style.color = obj.color;})
+                var opts = {
+                    angle: 0.1, 
+                    lineWidth: 0.3, 
+                    radiusScale: 1, 
+                    pointer: {
+                      length: 0.6, 
+                      strokeWidth: 0.042, 
+                      color: '#000000'
+                    },
+                    limitMax: true,     
+                    limitMin: true,     
+                    colorStart: '#8FC0DA',
+                    colorStop: obj.color,    
+                    strokeColor: '#FFFFFF', 
+                    generateGradient: true,
+                    highDpiSupport: true,     
+                    };
+                    var target = document.getElementById(obj.gaugeTag); 
+                    var gauge = new Gauge(target).setOptions(opts);          
+                    gauge.maxValue = 100; 
+                    gauge.setMinValue(0);  
+                    gauge.animationSpeed = 128;
+                    gauge.set(vals.readings[obj.index][last]);
 
 
-fetch(link2, {            
-	method: 'GET',
-}).then((response)=>{
-	return response.json();
-}).then((data)=>{
-    entry = []
-    createdAt = []
-    data.feeds.forEach(value=>
-        {
-            entry.push(value.field2);
-            createdAt.push(value.created_at);
-        });
-		var last = entry.length;
-		while(entry[last] == null)
-		{
-			last --;
-		}
-		document.getElementById('current--2').textContent = entry[last] + ' %';
-    const ctx2 = document.getElementById('field--2').getContext('2d');
-    const field2 = new Chart(ctx2, {
-		type: 'line',
-		data: {
-			labels: createdAt.slice(-1000),
-			datasets: [{
-				label: 'Humidity',
-				data: entry.slice(-1000),
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
-				borderWidth: 1
-			}]
-		},
-		options: {
-            showTooltips: true,
-            spanGaps: true,
-            maintainAspectRatio: false,
-			responsive: false,
-			scales: {
-				x: {
-					ticks: {
-						display: false
-					},
-					grid: {
-					  display: false
-					}
-				  }
-			}
-		}
-	});
-})
+                return (new Chart(document.getElementById(obj.chartTag), {
+                    type: 'line',
+                    data: {
+                        labels: vals.labels,
+                        datasets: [{
+                            label: obj.title,
+                            data: vals.readings[obj.index],
+                            fill: false,
+                            borderColor: obj.color,
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                             } 
+                        },
+                            animation: {
+                                duration: 500,
+                            },
+                        showTooltips: true,
+                        spanGaps: true,
+                        maintainAspectRatio: false,
+                        responsive: false,
+                        scales: {
+                            x: {
+                                ticks: {
+                                    display: false
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                }));
+            }
 
-fetch(link3, {            
-	method: 'GET',
-}).then((response)=>{
-	return response.json();
-}).then((data)=>{
-    entry = []
-    createdAt = []
-    data.feeds.forEach(value=>
-        {
-            entry.push(value.field3);
-            createdAt.push(value.created_at);
-        });
-		while(entry.pop() == null)
-		{
-			entry.pop()
-		}
-		var last = entry.length;
-		while(entry[last] == null)
-		{
-			last --;
-		}
-		if(entry[last] <= 0.16348)
-		{
-			console.warn('Voltage low');
-		}
-		document.getElementById('current--3').textContent = entry[last] + ' mV';
-    const ctx3 = document.getElementById('field--3').getContext('2d');
-    const field3 = new Chart(ctx3, {
-		type: 'line',
-		data: {
-			labels: createdAt.slice(-1000),
-			datasets: [{
-				label: 'Voltage',
-				data: entry.slice(-1000),
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
-                
-				borderWidth: 1
-			}]
-		},
-		options: {
-            showTooltips: true,
-            spanGaps: true,
-            maintainAspectRatio: false,
-			responsive: false,
-			scales: {
-				x: {
-					ticks: {
-						display: false
-					},
-					grid: {
-					  display: false
-					}
-				  }
-			}
-		}
-	});
-})
-fetch(link4, {            
-	method: 'GET',
-}).then((response)=>{
-	return response.json();
-}).then((data)=>{
-    entry = []
-    createdAt = []
-    data.feeds.forEach(value=>
-        {
-            entry.push(value.field4);
-            createdAt.push(value.created_at);
-        });
-		var last = entry.length;
-		while(entry[last] == null)
-		{
-			last --;
-		}
-		document.getElementById('current--4').textContent = entry[last] + ' mA';
-    const ctx4 = document.getElementById('field--4').getContext('2d');
-    const field4 = new Chart(ctx4, {
-		type: 'line',
-		data: {
-			labels: createdAt.slice(-1000),
-			datasets: [{
-				label: 'Current',
-				data: entry.slice(-1000),
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
-				borderWidth: 1
-			}]
-		},
-		options: {
-            showTooltips: true,
-            spanGaps: true,
-            maintainAspectRatio: false,
-			responsive: false,
-			scales: {
-				x: {
-					ticks: {
-						display: false
-					},
-					grid: {
-					  display: false
-					}
-				  }
-			}
-		}
-	});
-})
+            for(let i = 0; i<objList.length; i++)
+            {
+                chartList.push(chartRender(objList[i]));
+            }
+            console.log(chartList);
+        }  
+    )
+}
 
-fetch(link5, {            
-	method: 'GET',
-}).then((response)=>{
-	return response.json();
-}).then((data)=>{
-    entry = []
-    createdAt = []
-    data.feeds.forEach(value=>
-        {
-            entry.push(value.field5);
-            createdAt.push(value.created_at);
-        });
-	var last = entry.length;
-	while(entry[last] == null)
-	{
-		last --;
-	}
-		document.getElementById('current--5').textContent = entry[last] + ' mW';
-    const ctx5 = document.getElementById('field--5').getContext('2d');
-    const field5 = new Chart(ctx5, {
-		type: 'line',
-		data: {
-			labels: createdAt.slice(-1000),
-			datasets: [{
-				label: 'Active-Power',
-				data: entry.slice(-1000),
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
-				borderWidth: 1
-			}]
-		},
-		options: {
-            showTooltips: true,
-            spanGaps: true,
-            maintainAspectRatio: false,
-			responsive: false,
-			scales: {
-				x: {
-					ticks: {
-						display: false
-					},
-					grid: {
-					  display: false
-					}
-				  }
-			}
-		}
-	});
-})
+
+setInterval(function()
+    {
+        fetch(UPD, {            
+            method: 'GET',
+        }).then((response)=>{
+                return response.json();
+            }).then((data)=>
+            {
+                updatedData = [data.feeds.field1, data.feeds.field2, data.feeds.field3, data.feeds.field4, data.feeds.field5]
+                if(updatedData[2] != null && updatedData[2] < CRITICAL)
+                {
+                    window.alert('Voltage Low');
+                }
+                console.log('Values updated');
+                for(let i = 0; i<5; i++)
+                {
+                    chartList[i].data.datasets.forEach((dataset) => {
+                        chartList[i].data.labels.push(data.feeds.created_at);
+                        dataset.data.push(updatedData[i]);
+                    });
+                    // chartList[i].data.labels.shift();
+                    // chartList[i].data.datasets.forEach((dataset) => {
+                    //     dataset.data.shift();
+                    // });
+                    chartList[i].update();
+                }
+
+
+
+            });
+    }
+    , INTERVAL);
