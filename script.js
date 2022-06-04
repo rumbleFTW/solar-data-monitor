@@ -108,7 +108,7 @@ window.onload = function()
                              } 
                         },
                             animation: {
-                                duration: 500,
+                                duration: 1000,
                             },
                         showTooltips: true,
                         spanGaps: true,
