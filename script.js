@@ -15,7 +15,7 @@ vals = {
         field5 = []
     ]
     };
-
+ 
 chartList = []
 
 function downl(){
@@ -106,7 +106,7 @@ window.onload = function()
                              } 
                         },
                             animation: {
-                                duration: 500,
+                                duration: 0,
                             },
                         showTooltips: true,
                         spanGaps: true,
@@ -148,11 +148,11 @@ setInterval(function()
             }).then((data)=>
             {
                 updatedData = [data.feeds[0].field1, data.feeds[0].field2, data.feeds[0].field3, data.feeds[0].field4, data.feeds[0].field5]
-                // console.log(data.feeds[0].created_at);
-                // console.log(updatedData)
-
-                if(prev !== data.feeds[0].created_at)
+                console.log(data.feeds[0].created_at);
+                console.log(updatedData)
+                if(prev != data.feeds[0].created_at)
                 {
+                    // window.location.reload();
                     prev = data.feeds[0].created_at;
                     if(updatedData[2] != null && updatedData[2] < CRITICAL)
                     {
@@ -160,16 +160,18 @@ setInterval(function()
                     }
                     for(let i = 0; i<5; i++)
                     {
-                        chartList[i].data.datasets.forEach((dataset) => {
-                            chartList[i].data.labels.push(data.feeds.created_at);
-                            dataset.data.push(updatedData[i]);
-                        });
-                        // chartList[i].data.labels.shift();
-                        // chartList[i].data.datasets.forEach((dataset) => {
-                        //     dataset.data.shift();
-                        // });
-                        chartList[i].update();
+                        var temp = chartList[i].data.datasets[0].data;
+                        temp.push(updatedData[i]);
+                        temp.shift();
+                        chartList[i].data.datasets[0].data= temp;                
+                        // console.log(`New ${i} is ${updatedData[i]}`)
+                        chartList[i].update('show');
+                        console.log('Chart updated')    
                     }
+
+                    
+
+
                     console.log('Values updated');
                 }
             });
