@@ -130,11 +130,14 @@ window.onload = function()
             {
                 chartList.push(chartRender(objList[i]));
             }
-            console.log(chartList);
+            // console.log(chartList);
         }  
     )
 }
 
+
+
+prev = ""
 
 setInterval(function()
     {
@@ -144,27 +147,31 @@ setInterval(function()
                 return response.json();
             }).then((data)=>
             {
-                updatedData = [data.feeds.field1, data.feeds.field2, data.feeds.field3, data.feeds.field4, data.feeds.field5]
-                if(updatedData[2] != null && updatedData[2] < CRITICAL)
+                updatedData = [data.feeds[0].field1, data.feeds[0].field2, data.feeds[0].field3, data.feeds[0].field4, data.feeds[0].field5]
+                // console.log(data.feeds[0].created_at);
+                // console.log(updatedData)
+
+                if(prev !== data.feeds[0].created_at)
                 {
-                    window.alert('Voltage Low');
+                    prev = data.feeds[0].created_at;
+                    if(updatedData[2] != null && updatedData[2] < CRITICAL)
+                    {
+                        window.alert('Voltage Low');
+                    }
+                    for(let i = 0; i<5; i++)
+                    {
+                        chartList[i].data.datasets.forEach((dataset) => {
+                            chartList[i].data.labels.push(data.feeds.created_at);
+                            dataset.data.push(updatedData[i]);
+                        });
+                        // chartList[i].data.labels.shift();
+                        // chartList[i].data.datasets.forEach((dataset) => {
+                        //     dataset.data.shift();
+                        // });
+                        chartList[i].update();
+                    }
+                    console.log('Values updated');
                 }
-                console.log('Values updated');
-                for(let i = 0; i<5; i++)
-                {
-                    chartList[i].data.datasets.forEach((dataset) => {
-                        chartList[i].data.labels.push(data.feeds.created_at);
-                        dataset.data.push(updatedData[i]);
-                    });
-                    // chartList[i].data.labels.shift();
-                    // chartList[i].data.datasets.forEach((dataset) => {
-                    //     dataset.data.shift();
-                    // });
-                    chartList[i].update();
-                }
-
-
-
             });
     }
     , INTERVAL);
