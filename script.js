@@ -39,10 +39,10 @@ fetch(link1, {
     const field1 = new Chart(ctx1, {
 		type: 'line',
 		data: {
-			labels: createdAt.slice(-1000),
+			labels: createdAt.slice(300),
 			datasets: [{
 				label: 'Temperature',
-				data: entry.slice(-1000),
+				data: entry.slice(300),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',
@@ -104,10 +104,10 @@ fetch(link2, {
     const field2 = new Chart(ctx2, {
 		type: 'line',
 		data: {
-			labels: createdAt.slice(-1000),
+			labels: createdAt.slice(300),
 			datasets: [{
 				label: 'Humidity',
-				data: entry.slice(-1000),
+				data: entry.slice(300),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',
@@ -176,10 +176,10 @@ fetch(link3, {
     const field3 = new Chart(ctx3, {
 		type: 'line',
 		data: {
-			labels: createdAt.slice(-1000),
+			labels: createdAt.slice(300),
 			datasets: [{
 				label: 'Voltage',
-				data: entry.slice(-1000),
+				data: entry.slice(300),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',
@@ -240,10 +240,10 @@ fetch(link4, {
     const field4 = new Chart(ctx4, {
 		type: 'line',
 		data: {
-			labels: createdAt.slice(-1000),
+			labels: createdAt.slice(300),
 			datasets: [{
 				label: 'Current',
-				data: entry.slice(-1000),
+				data: entry.slice(300),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',
@@ -304,10 +304,10 @@ fetch(link5, {
     const field5 = new Chart(ctx5, {
 		type: 'line',
 		data: {
-			labels: createdAt.slice(-1000),
+			labels: createdAt.slice(300),
 			datasets: [{
 				label: 'Active-Power',
-				data: entry.slice(-1000),
+				data: entry.slice(300),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',
@@ -344,4 +344,49 @@ fetch(link5, {
 			}
 		}
 	});
+})
+
+
+
+google.charts.load('current', {'packages':['gauge']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+var data = google.visualization.arrayToDataTable([
+	['Label', 'Value'],
+	['Power', 0.1],
+]);
+
+var options = {
+	width: 400, height: 120,
+	redFrom: 90, redTo: 100,
+	yellowFrom:75, yellowTo: 90,
+	minorTicks: 5
+};
+
+var chart = new google.visualization.Gauge(document.getElementById('field--6'));
+
+chart.draw(data, options);
+
+// setInterval(function() {
+//   data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+//   chart.draw(data, options);
+// }, 13000);
+// setInterval(function() {
+//   data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+//   chart.draw(data, options);
+// }, 5000);
+// setInterval(function() {
+//   data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+//   chart.draw(data, options);
+// }, 26000);
+}
+
+fetch(temp, {            
+	method: 'GET',
+}).then((response)=>{
+	return response.json();	
+}).then((data)=>{
+    console.log(data);
 })
