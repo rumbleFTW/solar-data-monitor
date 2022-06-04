@@ -15,6 +15,15 @@ vals = {
         field5 = []
     ]
     };
+
+
+var objList = [
+    {chartTag: 'field--1', gaugeTag: 'field--6',currTag: 'current--1', color: 'rgb(255, 165, 0)', index: 0, unit: '°C'},
+    {chartTag: 'field--2', gaugeTag: 'field--7',currTag: 'current--2', color: 'rgb(128,128,128)', index: 1, unit: '%'},
+    {chartTag: 'field--3', gaugeTag: 'field--8',currTag: 'current--3', color: 'rgb(38, 160, 252)', index: 2, unit: 'V'},
+    {chartTag: 'field--4', gaugeTag: 'field--9',currTag: 'current--4', color: 'rgb(0,255,0)', index: 3, unit: 'mA'},
+    {chartTag: 'field--5', gaugeTag: 'field--0',currTag: 'current--5', color: 'rgb(255, 0, 0)', index: 4, unit: 'mW'},
+]
  
 chartList = []
 
@@ -43,13 +52,6 @@ window.onload = function()
                 vals.readings[4].push(data.feeds[i].field5);
             }
             console.log(vals);
-            var objList = [
-                        {chartTag: 'field--1', gaugeTag: 'field--6',currTag: 'current--1', color: 'rgb(255, 165, 0)', index: 0, unit: '°C'},
-                        {chartTag: 'field--2', gaugeTag: 'field--7',currTag: 'current--2', color: 'rgb(128,128,128)', index: 1, unit: '%'},
-                        {chartTag: 'field--3', gaugeTag: 'field--8',currTag: 'current--3', color: 'rgb(38, 160, 252)', index: 2, unit: 'V'},
-                        {chartTag: 'field--4', gaugeTag: 'field--9',currTag: 'current--4', color: 'rgb(0,255,0)', index: 3, unit: 'mA'},
-                        {chartTag: 'field--5', gaugeTag: 'field--0',currTag: 'current--5', color: 'rgb(255, 0, 0)', index: 4, unit: 'mW'},
-                    ]
             
             function chartRender(obj)
             {
@@ -153,6 +155,18 @@ setInterval(function()
                 if(prev != data.feeds[0].created_at)
                 {
                     // window.location.reload();
+
+                    for(let i = 0; i<5; i++)
+                    {
+                        if(updatedData[i] != null)
+                        {
+                            obj = objList[i];
+                            elems = document.getElementsByClassName(obj.currTag);
+                            [...elems].forEach(function(elem){elem.textContent = parseFloat(updatedData[i])
+                            elem.style.color = obj.color;})
+                        }
+                    }
+                    
                     prev = data.feeds[0].created_at;
                     if(updatedData[2] != null && updatedData[2] < CRITICAL)
                     {
