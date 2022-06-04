@@ -1,6 +1,6 @@
 PREV = 300
 CRITICAL = 0.1636
-INTERVAL = 5000
+INTERVAL = 1000
 
 const API = `https://api.thingspeak.com/channels/1727245/feeds.json?results=${PREV}`
 const UPD = `https://api.thingspeak.com/channels/1727245/feeds.json?results=1`
