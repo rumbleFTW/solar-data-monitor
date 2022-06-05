@@ -178,7 +178,7 @@ setInterval(function()
                             obj = objList[i];
                             elems = document.getElementsByClassName(obj.currTag);
                             gaugeList[i].ctx.displayedValue = updatedData[i];
-                            [...elems].forEach(function(elem){elem.textContent = `${parseFloat(updatedData[i])}` + `${obj.unit}`
+                            [...elems].forEach(function(elem){elem.textContent = `${parseFloat(updatedData[i])}` + ` ${obj.unit}`
                             elem.style.color = obj.color;})
                             console.log(`updated field ${i+1}`);
                             // console.log(gaugeList)
