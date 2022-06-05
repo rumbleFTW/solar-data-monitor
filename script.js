@@ -19,7 +19,7 @@ vals = {
 
 var objList = [
     {chartTag: 'field--1', gaugeTag: 'field--6',currTag: 'current--1', color: 'rgb(255, 165, 0)', index: 0, unit: '°C', gaugeMax: 40, gaugeMin: 16},
-    {chartTag: 'field--2', gaugeTag: 'field--7',currTag: 'current--2', color: 'rgb(128,128,128)', index: 1, unit: '%', gaugeMax: 100, gaugeMin: 0},
+    {chartTag: 'field--2', gaugeTag: 'field--7',currTag: 'current--2', color: 'rgb(128,128,128)', index: 1, unit: '%', gaugeMax: 100, gaugeMin: 1},
     {chartTag: 'field--3', gaugeTag: 'field--8',currTag: 'current--3', color: 'rgb(38, 160, 252)', index: 2, unit: 'V', gaugeMax: 1, gaugeMin: 0},
     {chartTag: 'field--4', gaugeTag: 'field--9',currTag: 'current--4', color: 'rgb(0,255,0)', index: 3, unit: 'mA', gaugeMax: 2, gaugeMin: 0},
     {chartTag: 'field--5', gaugeTag: 'field--0',currTag: 'current--5', color: 'rgb(255, 0, 0)', index: 4, unit: 'mW', gaugeMax: 1, gaugeMin: 0},
@@ -72,19 +72,19 @@ window.onload = function()
                       strokeWidth: 0.042, 
                       color: '#000000'
                     },
-                    limitMax: true,     
-                    limitMin: true,     
+                    limitMax: false,     
+                    limitMin: false,     
                     colorStart: '#8FC0DA',
                     colorStop: obj.color,    
                     strokeColor: '#FFFFFF', 
-                    generateGradient: true,
+                    // generateGradient: true,
                     highDpiSupport: true,     
                     };
                     var target = document.getElementById(obj.gaugeTag); 
                     var gauge = new Gauge(target).setOptions(opts);          
                     gauge.maxValue = obj.gaugeMax; 
                     gauge.setMinValue(obj.gaugeMin);  
-                    gauge.animationSpeed = 128;
+                    // gauge.animationSpeed = 0;
                     gauge.set(vals.readings[obj.index][last]);
                     return gauge;
             }
@@ -167,8 +167,6 @@ setInterval(function()
             }).then((data)=>
             {
                 updatedData = [data.feeds[0].field1, data.feeds[0].field2, data.feeds[0].field3, data.feeds[0].field4, data.feeds[0].field5]
-                console.log(data.feeds[0].created_at);
-                console.log(updatedData)
                 if(prev != data.feeds[0].created_at)
                 {
                     // window.location.reload();
@@ -179,10 +177,13 @@ setInterval(function()
                         {
                             obj = objList[i];
                             elems = document.getElementsByClassName(obj.currTag);
+                            gaugeList[i].maxValue = objList[i].maxValue;
+                            gaugeList[i].setMinValue(objList[i].minValue)
                             gaugeList[i].set(parseFloat(updatedData[i]));
                             gaugeList[i].render();
                             [...elems].forEach(function(elem){elem.textContent = parseFloat(updatedData[i])
                             elem.style.color = obj.color;})
+                            console.log(`updated field ${i+1}`);
                         }
                     }
                     
@@ -197,15 +198,8 @@ setInterval(function()
                         temp.push(updatedData[i]);
                         temp.shift();
                         chartList[i].data.datasets[0].data= temp;                
-                        // console.log(`New ${i} is ${updatedData[i]}`)
-                        chartList[i].update('show');
-                        console.log('Chart updated')    
+                        chartList[i].update('show');  
                     }
-
-                    
-
-
-                    console.log('Values updated');
                 }
             });
     }
