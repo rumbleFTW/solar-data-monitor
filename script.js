@@ -181,7 +181,7 @@ setInterval(function()
                             elems = document.getElementsByClassName(obj.currTag);
                             [...elems].forEach(function(elem){elem.textContent = parseFloat(updatedData[i])
                             elem.style.color = obj.color;})
-                            gaugeList[i].set(updatedData[i])
+                            gaugeList[i].set(parseFloat(updatedData[i]));
                         }
                     }
                     
