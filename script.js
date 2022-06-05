@@ -77,14 +77,14 @@ window.onload = function()
                     colorStart: '#8FC0DA',
                     colorStop: obj.color,    
                     strokeColor: '#FFFFFF', 
-                    // generateGradient: true,
+                    generateGradient: true,
                     highDpiSupport: true,     
                     };
                     var target = document.getElementById(obj.gaugeTag); 
                     var gauge = new Gauge(target).setOptions(opts);          
                     gauge.maxValue = obj.gaugeMax; 
                     gauge.setMinValue(obj.gaugeMin);  
-                    // gauge.animationSpeed = 0;
+                    gauge.animationSpeed = 128;
                     gauge.set(vals.readings[obj.index][last]);
                     return gauge;
             }
@@ -177,13 +177,11 @@ setInterval(function()
                         {
                             obj = objList[i];
                             elems = document.getElementsByClassName(obj.currTag);
-                            gaugeList[i].maxValue = objList[i].maxValue;
-                            gaugeList[i].setMinValue(objList[i].minValue)
-                            gaugeList[i].set(parseFloat(updatedData[i]));
-                            gaugeList[i].render();
+                            gaugeList[i].ctx.displayedValue = updatedData[i];
                             [...elems].forEach(function(elem){elem.textContent = parseFloat(updatedData[i])
                             elem.style.color = obj.color;})
                             console.log(`updated field ${i+1}`);
+                            // console.log(gaugeList)
                         }
                     }
                     
