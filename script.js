@@ -18,14 +18,15 @@ vals = {
 
 
 var objList = [
-    {chartTag: 'field--1', gaugeTag: 'field--6',currTag: 'current--1', color: 'rgb(255, 165, 0)', index: 0, unit: '°C'},
-    {chartTag: 'field--2', gaugeTag: 'field--7',currTag: 'current--2', color: 'rgb(128,128,128)', index: 1, unit: '%'},
-    {chartTag: 'field--3', gaugeTag: 'field--8',currTag: 'current--3', color: 'rgb(38, 160, 252)', index: 2, unit: 'V'},
-    {chartTag: 'field--4', gaugeTag: 'field--9',currTag: 'current--4', color: 'rgb(0,255,0)', index: 3, unit: 'mA'},
-    {chartTag: 'field--5', gaugeTag: 'field--0',currTag: 'current--5', color: 'rgb(255, 0, 0)', index: 4, unit: 'mW'},
+    {chartTag: 'field--1', gaugeTag: 'field--6',currTag: 'current--1', color: 'rgb(255, 165, 0)', index: 0, unit: '°C', gaugeMax: 40, gaugeMin: 16},
+    {chartTag: 'field--2', gaugeTag: 'field--7',currTag: 'current--2', color: 'rgb(128,128,128)', index: 1, unit: '%', gaugeMax: 100, gaugeMin: 0},
+    {chartTag: 'field--3', gaugeTag: 'field--8',currTag: 'current--3', color: 'rgb(38, 160, 252)', index: 2, unit: 'V', gaugeMax: 2, gaugeMin: 0},
+    {chartTag: 'field--4', gaugeTag: 'field--9',currTag: 'current--4', color: 'rgb(0,255,0)', index: 3, unit: 'mA', gaugeMax: 2, gaugeMin: 0},
+    {chartTag: 'field--5', gaugeTag: 'field--0',currTag: 'current--5', color: 'rgb(255, 0, 0)', index: 4, unit: 'mW', gaugeMax: 2, gaugeMin: 0},
 ]
  
 chartList = []
+gaugeList = []
 
 function downl(){
     var date = document.getElementById("dt").value
@@ -53,17 +54,15 @@ window.onload = function()
             }
             console.log(vals);
             
-            function chartRender(obj)
+
+
+            function gaugeRender(obj)
             {
                 var last = PREV;
                 while(vals.readings[obj.index][last] == null)
                 {
                     last --;
                 }
-
-                elems = document.getElementsByClassName(obj.currTag);
-                [...elems].forEach(function(elem){elem.textContent = parseFloat(vals.readings[obj.index][last]) + ` ${obj.unit}`;
-                elem.style.color = obj.color;})
                 var opts = {
                     angle: 0.1, 
                     lineWidth: 0.3, 
@@ -83,10 +82,27 @@ window.onload = function()
                     };
                     var target = document.getElementById(obj.gaugeTag); 
                     var gauge = new Gauge(target).setOptions(opts);          
-                    gauge.maxValue = 100; 
-                    gauge.setMinValue(0);  
+                    gauge.maxValue = obj.gaugeMax; 
+                    gauge.setMinValue(obj.gaugeMin);  
                     gauge.animationSpeed = 128;
                     gauge.set(vals.readings[obj.index][last]);
+                    return gauge;
+            }
+
+
+
+
+            function chartRender(obj)
+            {
+                var last = PREV;
+                while(vals.readings[obj.index][last] == null)
+                {
+                    last --;
+                }
+
+                elems = document.getElementsByClassName(obj.currTag);
+                [...elems].forEach(function(elem){elem.textContent = parseFloat(vals.readings[obj.index][last]) + ` ${obj.unit}`;
+                elem.style.color = obj.color;})
 
 
                 return (new Chart(document.getElementById(obj.chartTag), {
@@ -131,6 +147,7 @@ window.onload = function()
             for(let i = 0; i<objList.length; i++)
             {
                 chartList.push(chartRender(objList[i]));
+                gaugeList.push(gaugeRender(objList[i]))
             }
             // console.log(chartList);
         }  
@@ -164,6 +181,7 @@ setInterval(function()
                             elems = document.getElementsByClassName(obj.currTag);
                             [...elems].forEach(function(elem){elem.textContent = parseFloat(updatedData[i])
                             elem.style.color = obj.color;})
+                            gaugeList[i].set(updatedData[i])
                         }
                     }
                     
