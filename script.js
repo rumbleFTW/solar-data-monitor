@@ -20,7 +20,7 @@ vals = {
 var objList = [
     {chartTag: 'field--1', gaugeTag: 'field--6',currTag: 'current--1', color: 'rgb(255, 165, 0)', index: 0, unit: '°C', gaugeMax: 40, gaugeMin: 16},
     {chartTag: 'field--2', gaugeTag: 'field--7',currTag: 'current--2', color: 'rgb(128,128,128)', index: 1, unit: '%', gaugeMax: 100, gaugeMin: 0},
-    {chartTag: 'field--3', gaugeTag: 'field--8',currTag: 'current--3', color: 'rgb(38, 160, 252)', index: 2, unit: 'V', gaugeMax: 2, gaugeMin: 0},
+    {chartTag: 'field--3', gaugeTag: 'field--8',currTag: 'current--3', color: 'rgb(38, 160, 252)', index: 2, unit: 'V', gaugeMax: 1, gaugeMin: 0},
     {chartTag: 'field--4', gaugeTag: 'field--9',currTag: 'current--4', color: 'rgb(0,255,0)', index: 3, unit: 'mA', gaugeMax: 2, gaugeMin: 0},
     {chartTag: 'field--5', gaugeTag: 'field--0',currTag: 'current--5', color: 'rgb(255, 0, 0)', index: 4, unit: 'mW', gaugeMax: 2, gaugeMin: 0},
 ]
