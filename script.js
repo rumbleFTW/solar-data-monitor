@@ -36,6 +36,9 @@ function downl(){
 
 window.onload = function()
 {
+    var myDate = document.getElementById('dt');
+    var today = new Date();
+    myDate.value = today.toISOString().substr(0, 10);
     fetch(API, {            
 	    method: 'GET',
     }).then((response)=>{
@@ -153,7 +156,6 @@ window.onload = function()
         }  
     )
 }
-
 
 
 prev = ""
