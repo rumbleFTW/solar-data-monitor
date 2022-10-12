@@ -48,12 +48,16 @@ window.onload = function()
             
             for(let i = 0; i<PREV; i++)
             {
-                vals.labels.push(data.feeds[i].created_at);
-                vals.readings[0].push(data.feeds[i].field1);
-                vals.readings[1].push(data.feeds[i].field2);
-                vals.readings[2].push(data.feeds[i].field3);
-                vals.readings[3].push(data.feeds[i].field4);
-                vals.readings[4].push(data.feeds[i].field5);
+                try
+                {
+                    vals.labels.push(data.feeds[i].created_at);
+                    vals.readings[0].push(data.feeds[i].field1);
+                    vals.readings[1].push(data.feeds[i].field2);
+                    vals.readings[2].push(data.feeds[i].field3);
+                    vals.readings[3].push(data.feeds[i].field4);
+                    vals.readings[4].push(data.feeds[i].field5);
+                }
+                catch{}
             }
             console.log(vals);
             
