@@ -33,6 +33,38 @@ function downl(){
     document.getElementById("down").href = `https://api.thingspeak.com/channels/1727245/feeds.csv?start=${date}%2000:00:00&end=${date}%2023:59:59`;
 }
 
+function gaugeRender(obj)
+{
+    var last = PREV;
+    while(vals.readings[obj.index][last] == null)
+    {
+        last --;
+    }
+    var opts = {
+        angle: 0.1, 
+        lineWidth: 0.3, 
+        radiusScale: 1, 
+        pointer: {
+          length: 0.6, 
+          strokeWidth: 0.042, 
+          color: '#000000'
+        },
+        limitMax: false,     
+        limitMin: false,     
+        colorStart: '#8FC0DA',
+        colorStop: obj.color,    
+        strokeColor: '#FFFFFF', 
+        generateGradient: true,
+        highDpiSupport: true,     
+        };
+        var target = document.getElementById(obj.gaugeTag); 
+        var gauge = new Gauge(target).setOptions(opts);          
+        gauge.maxValue = obj.gaugeMax; 
+        gauge.setMinValue(obj.gaugeMin);  
+        gauge.animationSpeed = 28;
+        gauge.set(vals.readings[obj.index][last]);
+        return gauge;
+}
 
 window.onload = function()
 {
@@ -56,48 +88,9 @@ window.onload = function()
                     vals.readings[2].push(data.feeds[i].field3);
                     vals.readings[3].push(data.feeds[i].field4);
                     vals.readings[4].push(data.feeds[i].field5);
-                }
-                catch{}
+                }catch{}
             }
             console.log(vals);
-            
-
-
-            function gaugeRender(obj)
-            {
-                var last = PREV;
-                while(vals.readings[obj.index][last] == null)
-                {
-                    last --;
-                }
-                var opts = {
-                    angle: 0.1, 
-                    lineWidth: 0.3, 
-                    radiusScale: 1, 
-                    pointer: {
-                      length: 0.6, 
-                      strokeWidth: 0.042, 
-                      color: '#000000'
-                    },
-                    limitMax: false,     
-                    limitMin: false,     
-                    colorStart: '#8FC0DA',
-                    colorStop: obj.color,    
-                    strokeColor: '#FFFFFF', 
-                    generateGradient: true,
-                    highDpiSupport: true,     
-                    };
-                    var target = document.getElementById(obj.gaugeTag); 
-                    var gauge = new Gauge(target).setOptions(opts);          
-                    gauge.maxValue = obj.gaugeMax; 
-                    gauge.setMinValue(obj.gaugeMin);  
-                    gauge.animationSpeed = 128;
-                    gauge.set(vals.readings[obj.index][last]);
-                    return gauge;
-            }
-
-
-
 
             function chartRender(obj)
             {
@@ -137,6 +130,7 @@ window.onload = function()
                         spanGaps: true,
                         maintainAspectRatio: false,
                         responsive: false,
+                        highDpiSupport: true,
                         scales: {
                             x: {
                                 ticks: {
@@ -183,7 +177,7 @@ setInterval(function()
                         {
                             obj = objList[i];
                             elems = document.getElementsByClassName(obj.currTag);
-                            gaugeList[i].ctx.displayedValue = updatedData[i];
+                            gaugeList.push(gaugeRender(objList[i]));
                             [...elems].forEach(function(elem){elem.textContent = `${parseFloat(updatedData[i])}` + ` ${obj.unit}`
                             elem.style.color = obj.color;})
                             console.log(`updated field ${i+1}`);
