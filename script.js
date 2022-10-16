@@ -24,7 +24,7 @@ var objList = [
     {chartTag: 'field--4', gaugeTag: 'field--9',currTag: 'current--4', color: 'rgb(0,255,0)', index: 3, unit: 'mA', gaugeMax: 2, gaugeMin: 0},
     {chartTag: 'field--5', gaugeTag: 'field--0',currTag: 'current--5', color: 'rgb(255, 0, 0)', index: 4, unit: 'mW', gaugeMax: 1, gaugeMin: 0},
 ]
-
+ 
 chartList = []
 gaugeList = []
 
@@ -41,26 +41,26 @@ function gaugeRender(obj)
         last --;
     }
     var opts = {
-        angle: 0.1,
-        lineWidth: 0.3,
-        radiusScale: 1,
+        angle: 0.1, 
+        lineWidth: 0.3, 
+        radiusScale: 1, 
         pointer: {
-          length: 0.6,
-          strokeWidth: 0.042,
+          length: 0.6, 
+          strokeWidth: 0.042, 
           color: '#000000'
         },
-        limitMax: false,
-        limitMin: false,
+        limitMax: false,     
+        limitMin: false,     
         colorStart: '#8FC0DA',
-        colorStop: obj.color,
-        strokeColor: '#FFFFFF',
+        colorStop: obj.color,    
+        strokeColor: '#FFFFFF', 
         generateGradient: true,
-        highDpiSupport: true,
+        highDpiSupport: true,     
         };
-        var target = document.getElementById(obj.gaugeTag);
-        var gauge = new Gauge(target).setOptions(opts);
-        gauge.maxValue = obj.gaugeMax;
-        gauge.setMinValue(obj.gaugeMin);
+        var target = document.getElementById(obj.gaugeTag); 
+        var gauge = new Gauge(target).setOptions(opts);          
+        gauge.maxValue = obj.gaugeMax; 
+        gauge.setMinValue(obj.gaugeMin);  
         gauge.animationSpeed = 28;
         gauge.set(vals.readings[obj.index][last]);
         return gauge;
@@ -71,13 +71,13 @@ window.onload = function()
     // var myDate = document.getElementById('dt');
     // var today = new Date();
     // myDate.value = today.toISOString().substr(0, 10);
-    fetch(API, {
+    fetch(API, {            
 	    method: 'GET',
     }).then((response)=>{
             return response.json();
         }).then((data)=>
         {
-
+            
             for(let i = 0; i<PREV; i++)
             {
                 try
@@ -121,7 +121,7 @@ window.onload = function()
                         plugins: {
                             legend: {
                                 display: false,
-                             }
+                             } 
                         },
                             animation: {
                                 duration: 1000,
@@ -151,7 +151,7 @@ window.onload = function()
                 gaugeList.push(gaugeRender(objList[i]))
             }
             // console.log(chartList);
-        }
+        }  
     )
 }
 
@@ -160,7 +160,7 @@ prev = ""
 
 setInterval(function()
     {
-        fetch(UPD, {
+        fetch(UPD, {            
             method: 'GET',
         }).then((response)=>{
                 return response.json();
@@ -184,19 +184,19 @@ setInterval(function()
                             // console.log(gaugeList)
                         }
                     }
-
+                    
                     prev = data.feeds[0].created_at;
                     if(updatedData[2] != null && updatedData[2] < CRITICAL)
                     {
-//                        window.alert('Voltage Low');
+                        window.alert('Voltage Low');
                     }
                     for(let i = 0; i<5; i++)
                     {
                         var temp = chartList[i].data.datasets[0].data;
                         temp.push(updatedData[i]);
                         temp.shift();
-                        chartList[i].data.datasets[0].data= temp;
-                        chartList[i].update('show');
+                        chartList[i].data.datasets[0].data= temp;                
+                        chartList[i].update('show');  
                     }
                 }
             });
