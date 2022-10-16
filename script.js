@@ -186,10 +186,10 @@ setInterval(function()
                     }
                     
                     prev = data.feeds[0].created_at;
-                    if(updatedData[2] != null && updatedData[2] < CRITICAL)
-                    {
-                        window.alert('Voltage Low');
-                    }
+//                     if(updatedData[2] != null && updatedData[2] < CRITICAL)
+//                     {
+//                         window.alert('Voltage Low');
+//                     }
                     for(let i = 0; i<5; i++)
                     {
                         var temp = chartList[i].data.datasets[0].data;
