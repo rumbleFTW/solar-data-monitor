@@ -1,3 +1,6 @@
+CONTROL = true
+
+
 PREV = 300
 CRITICAL = 0.1636
 INTERVAL = 5000
@@ -160,45 +163,48 @@ prev = ""
 
 setInterval(function()
     {
-        fetch(UPD, {            
-            method: 'GET',
-        }).then((response)=>{
-                return response.json();
-            }).then((data)=>
-            {
-                updatedData = [data.feeds[0].field1, data.feeds[0].field2, data.feeds[0].field3, data.feeds[0].field4, data.feeds[0].field5]
-                if(prev != data.feeds[0].created_at)
-                {
-                    // window.location.reload();
+	if(CONTROL)
+	{
+		fetch(UPD, {            
+		    method: 'GET',
+		}).then((response)=>{
+			return response.json();
+		    }).then((data)=>
+		    {
+			updatedData = [data.feeds[0].field1, data.feeds[0].field2, data.feeds[0].field3, data.feeds[0].field4, data.feeds[0].field5]
+			if(prev != data.feeds[0].created_at)
+			{
+			    // window.location.reload();
 
-                    for(let i = 0; i<5; i++)
-                    {
-                        if(updatedData[i] != null)
-                        {
-                            obj = objList[i];
-                            elems = document.getElementsByClassName(obj.currTag);
-                            gaugeList.push(gaugeRender(objList[i]));
-                            [...elems].forEach(function(elem){elem.textContent = `${parseFloat(updatedData[i])}` + ` ${obj.unit}`
-                            elem.style.color = obj.color;})
-                            console.log(`updated field ${i+1}`);
-                            // console.log(gaugeList)
-                        }
-                    }
-                    
-                    prev = data.feeds[0].created_at;
-//                     if(updatedData[2] != null && updatedData[2] < CRITICAL)
-//                     {
-//                         window.alert('Voltage Low');
-//                     }
-                    for(let i = 0; i<5; i++)
-                    {
-                        var temp = chartList[i].data.datasets[0].data;
-                        temp.push(updatedData[i]);
-                        temp.shift();
-                        chartList[i].data.datasets[0].data= temp;                
-                        chartList[i].update('show');  
-                    }
-                }
-            });
+			    for(let i = 0; i<5; i++)
+			    {
+				if(updatedData[i] != null)
+				{
+				    obj = objList[i];
+				    elems = document.getElementsByClassName(obj.currTag);
+				    gaugeList.push(gaugeRender(objList[i]));
+				    [...elems].forEach(function(elem){elem.textContent = `${parseFloat(updatedData[i])}` + ` ${obj.unit}`
+				    elem.style.color = obj.color;})
+				    console.log(`updated field ${i+1}`);
+				    // console.log(gaugeList)
+				}
+			    }
+
+			    prev = data.feeds[0].created_at;
+	//                     if(updatedData[2] != null && updatedData[2] < CRITICAL)
+	//                     {
+	//                         window.alert('Voltage Low');
+	//                     }
+			    for(let i = 0; i<5; i++)
+			    {
+				var temp = chartList[i].data.datasets[0].data;
+				temp.push(updatedData[i]);
+				temp.shift();
+				chartList[i].data.datasets[0].data= temp;                
+				chartList[i].update('show');  
+			    }
+			}
+		    });
+	}
     }
     , INTERVAL);
