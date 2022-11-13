@@ -1,4 +1,4 @@
-CONTROL = true
+CONTROL = false
 
 
 PREV = 300
